@@ -14,8 +14,9 @@
 			var myChart = echarts.init(document.getElementById("container"));
 			const myPallete = ["#ffe19c", "#db9d47", "#ff784f", "#3a3042"]
       const option = {
-        legend: {},
-        tooltip: {},
+				legend: {top: 20},
+				backgroundColor: 'lightblue',
+        tooltip: {show: true},
         dataset: {
           source: [
             ["product", "2012", "2013", "2014", "2015"],
@@ -24,8 +25,8 @@
             ["Catuaba", 24.1, 67.2, 79.5, 86.4],
           ],
         },
-				// duas colunas no grid
-				grid: [{ bottom: "55%" }, { top: "55%" }],
+				// dois gráficos no grid: anos X bebida e  bebidas X anos 
+				grid: [{ bottom: "52%" }, { top: "57%", bottom: '40px'  }],
         xAxis: [
           { type: "category", gridIndex: 0 },
           { type: "category", gridIndex: 1 },
@@ -34,19 +35,35 @@
         series: [
           // These series is in the upper grid, and each
           // is mapped to a row.
-          { type: "bar", seriesLayoutBy: "row" },
-          { type: "bar", seriesLayoutBy: "row" },
-          { type: "bar", seriesLayoutBy: "row" },
+          { type: "bar", seriesLayoutBy: "row", color: myPallete[0]  },
+          { type: "bar", seriesLayoutBy: "row" , color: myPallete[3]},
+					{ type: "bar", seriesLayoutBy: "row" , color: myPallete[2]},
+
+
           // These series is in the lower grid, and each
           // is mapped to a column.
-          { type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[1], lineStyle: {width: 6} },
-          { type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[2], lineStyle: {width: 6} },
-          { type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[3], lineStyle: {width: 6} },
-					{ type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[0], lineStyle: {width: 6}},
+          { type: "line", xAxisIndex: 1, yAxisIndex: 1, lineStyle: {width: 6} },
+          { type: "line", xAxisIndex: 1, yAxisIndex: 1, lineStyle: {width: 6} },
+					{ type: "line", xAxisIndex: 1, yAxisIndex: 1, lineStyle: {width: 6}},
+					{ type: "line", xAxisIndex: 1, yAxisIndex: 1, lineStyle: {width: 6}},
+
         ],
       };
 
-      myChart.setOption(option);
+			myChart.setOption(option);
+			
+
+			/*
+			In order not to be confusing, we'll use "2d-table", "2d-array". 
+			In the examples above, we use 2d-array to carry the 2d-table. 
+			When we set seriesLayoutBy as 'column', namely, mapping columns 
+			to series, each column is called a dimension, and each row is a data item. 
+			When we set seriesLayoutBy as 'row', namely, mapping rows to series, each row 
+			is called a dimension, and each column is a data item.
+
+
+			seriesLayoutBy: "column" fica implícito 
+			*/
     </script>
   </body>
 </html>

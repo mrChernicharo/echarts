@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="../echarts.min.js"></script>
+
+    <title>Echart test</title>
+  </head>
+  <body>
+    <h1>Hello Echarts</h1>
+
+    <div id="container" style="width: 1000px; height: 300px;"></div>
+
+    <script>
+      const myChart = echarts.init(document.getElementById("container"));
+
+      // const source = [
+      // 	['score', 'amount', 'product'],
+      // 	[89.3, 58212, 'Matcha Latte'],
+      // 	[57.1, 78254, 'Milk Tea'],
+      // 	[74.4, 41032, 'Cheese Cocoa'],
+      // 	[50.1, 12755, 'Cheese Brownie'],
+      // 	[89.7, 20145, 'Matcha Cocoa'],
+      // 	[68.1, 79146, 'Tea'],
+      // 	[19.6, 91852, 'Orange Juice'],
+      // 	[10.6, 101852, 'Lemon Juice'],
+      // 	[32.7, 20112, 'Walnut Brownie']
+      // ];
+      // const option1 = {
+      //   dataset: {
+      // 		source: source,
+      //     dimensions: [
+      //       // Each item can be object or string.
+      //       { name: "score" },
+      //       // A string indicates the dimension name.
+      //       "amount",
+      //       // Dimension type can be specified.
+      //       { name: "product", type: "ordinal" },
+      //     ],
+
+      //   },
+      //   // ...
+      // };
+
+      // const option2 = {
+      //   dataset: {
+      //     source:  source
+      //   },
+      //   series: {
+      //     type: "line",
+      //     // Dimensions declared in series will be adapted with higher priority.
+      //     dimensions: [
+      //       null, // Set as null means we dont want to set dimension name.
+      //       "amount",
+      //       { name: "product", type: "ordinal" },
+      //     ],
+      //   },
+      //   //...
+      // };
+
+      const option = {
+				tooltip: {
+					show: true
+				},
+        dataset: {
+          source: [
+            ["score", "amount", "product"],
+            [89.3, 58212, "Latte"],
+            [57.1, 78254, "MTea"],
+            [74.4, 41032, "XCocoa"],
+            [50.1, 12755, "XBrownie"],
+            [89.7, 20145, "Cocoa"],
+            [68.1, 79146, "Tea"],
+            [19.6, 91852, "Orange"],
+            [10.6, 101852, "Lemon"],
+            [32.7, 20112, "Walnut"],
+          ],
+				},
+				grid: [{bottom: '55%'}, {top: '55%'}],
+        xAxis:  [
+          { type: "category", gridIndex: 0, axisTick: {alignWithLabel: true} },
+          { type: "category", gridIndex: 1, axisTick: {}  },
+        ],
+        yAxis: [{gridIndex: 0}, {gridIndex: 1}],
+        series: [
+          {
+            type: "bar",
+            encode: {
+              // Map dimension "amount" to the X axis.
+              x: "product",
+              // Map dimension "product" to the Y axis.
+              y: "score",
+            },
+					},
+					{
+            type: "bar", xAxisIndex: 1, yAxisIndex: 1,
+            encode: {
+              // Map dimension "amount" to the X axis.
+              x: "product",
+              // Map dimension "product" to the Y axis.
+              y: "amount",
+            },
+          },
+        ],
+      };
+
+      myChart.setOption(option);
+    </script>
+  </body>
+</html>
