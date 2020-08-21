@@ -54,14 +54,14 @@
       const onionPrices = { onion: pricesPerMonthArray.map((m) => m[3]) };
       const eggPrices = { egg: pricesPerMonthArray.map((m) => m[4]) };
 
-      // console.log("pricesPerMonthArray");
-      // console.log(pricesPerMonthArray);
-      // console.log("tomatoPrices");
-      // console.log(tomatoPrices);
-      // console.log("carrotPrices");
-      // console.log(carrotPrices);
-      // console.log("potatoPrices");
-      // console.log(potatoPrices);
+      console.log("pricesPerMonthArray");
+      console.log(pricesPerMonthArray);
+      console.log("tomatoPrices");
+      console.log(tomatoPrices);
+      console.log("carrotPrices");
+      console.log(carrotPrices);
+      console.log("potatoPrices");
+      console.log(potatoPrices);
 
       const option = {
 				grid: {
@@ -76,30 +76,56 @@
         yAxis: {},
         series: [
           {
-            type: "line",
+						name: 'Tomatoes',
+            type: "bar",
 						data: [...tomatoPrices.tomato],
-						smooth: true
+						barMaxWidth: 12,
+						color: 'red',
 					},
 					{
-            type: "line",
-            data: [...eggPrices.egg],
-						smooth: true
+						name: 'Eggs',
+            type: "bar",
+						data: [...eggPrices.egg],
+						barMaxWidth: 25,
+						color: '#ffd91c',
+						label: {
+							show: true
+						},
+						itemStyle: {
+							borderWidth: 1,
+							borderColor: 'orange',
+							barBorderRadius:  10,
+						}
           },
           {
+						name: 'Potatoes',
             type: "pie",
             radius: 70,
             center: ["85%", 100], // pos: [x, y]
 						data: [...potatoPrices.potato],
           },
           {
+						name: 'Carrots',
             type: "line",
 						data: [...carrotPrices.carrot],
-						smooth: true			
+						// smooth: true,		
+						lineStyle: {
+							width: 6,
+							color: '#ff861c'
+						},
 					},
 					{
+						name: 'Onions',
             type: "line",
 						data: [...onionPrices.onion],
-						smooth: true
+						smooth: true,
+						lineStyle: {
+							width: 4,
+							color: 'purple'
+						},
+						label: {
+							show: true
+						}
           },
         ],
         tooltip: {
@@ -130,7 +156,9 @@
       }
 
       function randomIntFromInterval(min, max) {
-        return Math.random() * (max - min + 1) + min;
+				let num = (Math.random() * (max - min + 1) + min);
+				// formated = new Intl.NumberFormat('pt-BR', {}).format(num)
+				return num.toPrecision(3)
       }
     </script>
   </body>
