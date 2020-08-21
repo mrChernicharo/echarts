@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../echarts.min.js"></script>
+    <title>Echart test</title>
+  </head>
+  <body>
+    <h1>Hello Echarts</h1>
+    <div id="container" style="width: 600px; height: 400px;"></div>
+
+    <script>
+			var myChart = echarts.init(document.getElementById("container"));
+			const myPallete = ["#ffe19c", "#db9d47", "#ff784f", "#3a3042"]
+      const option = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+          source: [
+            ["product", "2012", "2013", "2014", "2015"],
+            ["Cerveja", 41.1, 30.4, 65.1, 53.3],
+            ["Cachaça", 86.5, 92.1, 85.7, 83.1],
+            ["Catuaba", 24.1, 67.2, 79.5, 86.4],
+          ],
+        },
+				// duas colunas no grid
+				grid: [{ bottom: "55%" }, { top: "55%" }],
+        xAxis: [
+          { type: "category", gridIndex: 0 },
+          { type: "category", gridIndex: 1 },
+        ],
+				yAxis: [{ gridIndex: 0 }, { gridIndex: 1 }],
+        series: [
+          // These series is in the upper grid, and each
+          // is mapped to a row.
+          { type: "bar", seriesLayoutBy: "row" },
+          { type: "bar", seriesLayoutBy: "row" },
+          { type: "bar", seriesLayoutBy: "row" },
+          // These series is in the lower grid, and each
+          // is mapped to a column.
+          { type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[1], lineStyle: {width: 6} },
+          { type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[2], lineStyle: {width: 6} },
+          { type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[3], lineStyle: {width: 6} },
+					{ type: "line", xAxisIndex: 1, yAxisIndex: 1, color: myPallete[0], lineStyle: {width: 6}},
+        ],
+      };
+
+      myChart.setOption(option);
+    </script>
+  </body>
+</html>
