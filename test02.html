@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="echarts.min.js"></script>
+
+    <title>Echart test</title>
+  </head>
+  <body>
+    <h1>Hello Echarts</h1>
+
+    <div id="container" style="width: 1000px; height: 400px;"></div>
+
+    <script>
+      // based on prepared DOM, initialize echarts instance
+      const myChart = echarts.init(document.getElementById("container"));
+
+      const sampleProducts = [
+        { name: "tomato", price: 4.6 },
+        { name: "carrot", price: 3.2 },
+        { name: "potato", price: 3.4 },
+        { name: "onion", price: 6.1 },
+        { name: "eggs", price: 4.5 },
+        { name: "letuce", price: 2.7 },
+        { name: "chocolat", price: 8.4 },
+      ];
+
+      const months = [
+        "Jan",
+        "Fev",
+        "Mar",
+        "Abr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Set",
+        "Out",
+        "Nov",
+        "Dez",
+      ];
+
+      const data = inventPrices(sampleProducts, months);
+
+      const pricesPerMonthArray = data.map((m) =>
+        m.products.map((p) => p.price)
+      );
+
+      const tomatoPrices = { tomato: pricesPerMonthArray.map((m) => m[0]) };
+      const carrotPrices = { carrot: pricesPerMonthArray.map((m) => m[1]) };
+      const potatoPrices = { potato: pricesPerMonthArray.map((m) => m[2]) };
+
+      console.log("pricesPerMonthArray");
+      console.log(pricesPerMonthArray);
+      console.log("tomatoPrices");
+      console.log(tomatoPrices);
+      console.log("carrotPrices");
+      console.log(carrotPrices);
+      console.log("potatoPrices");
+      console.log(potatoPrices);
+
+      const option = {
+        xAxis: {
+          data: months,
+        },
+        yAxis: {
+          // data: [...pricesPerMonthArray]
+        },
+        series: [
+          {
+            type: "line",
+            data: [...tomatoPrices.tomato],
+          },
+          {
+            type: "pie",
+            radius: 60,
+            center: ["65%", 80],
+						data: [...potatoPrices.potato],
+          },
+          {
+            type: "bar",
+            data: [...carrotPrices.carrot],
+          },
+        ],
+        tooltip: {
+          show: true,
+        },
+      };
+
+      myChart.setOption(option);
+
+      // console.log(products)
+
+      function inventPrices(array, months) {
+        let totalData = Object.assign([...months]);
+
+        totalData = totalData.map((m) => {
+          return {
+            month: m,
+            products: array.map((p) => {
+              return {
+                name: p.name,
+                price: randomIntFromInterval(p.price / 2, p.price * 2),
+              };
+            }),
+          };
+        });
+
+        return totalData;
+      }
+
+      function randomIntFromInterval(min, max) {
+        return Math.random() * (max - min + 1) + min;
+      }
+    </script>
+  </body>
+</html>
