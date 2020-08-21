@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="../echarts.min.js"></script>
+
+    <title>Echart test</title>
+  </head>
+  <body>
+    <h1>Hello Echarts</h1>
+
+    <div id="container" style="width: 800px; height: 400px;"></div>
+
+    <script>
+      const myChart = echarts.init(document.getElementById("container"));
+
+		const	option = {
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line',
+        areaStyle: {}
+    }]
+};
+
+      myChart.setOption(option);
+    </script>
+  </body>
+</html>
