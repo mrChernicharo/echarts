@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="../echarts.min.js"></script>
+    <style>
+      * {
+        font-family: "Fira Code", Arial, Helvetica, sans-serif;
+      }
+    </style>
+
+    <title>Echart test</title>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Hello Echarts</h1>
+
+    <div id="main" style="width: 800px; height: 500px;"></div>
+
+    <script>
+      const symbolSize = 20;
+      const data = [
+        [100, -400, 'a'],
+        [70, -220, 'b'],
+        [150, 0, 'c'],
+        [-500, 100, 'd'],
+        [-260, 200, 'e'],
+        [-460, 300, 'f'],
+        [-220, 400, 'g'],
+        [120, 200, 'h'],
+      ];
+
+      const myChart = echarts.init(document.getElementById("main"));
+
+      myChart.setOption({
+        tooltip: {
+          triggerOn: "none",
+          formatter: (params, name) => {
+            return (
+          	 name.slice(-1) +  "<br>🥒: " + params.data[0].toFixed(2) + "<br>🍕: " + params.data[1].toFixed(2)) ;
+          },
+        },
+        xAxis: {
+          min: -1000,
+          max: 1000,
+          type: "value",
+          axisLine: { onZero: false },
+        },
+        yAxis: {
+          min: -600,
+          max: 600,
+          type: "value",
+          axisLine: { onZero: false },
+        },
+        series: [
+          {
+            id: "id",
+            type: "line",
+            smooth: true,
+            symbolSize: symbolSize / 2,
+            data: data,
+          },
+        ],
+      });
+
+      myChart.setOption({
+        graphic: echarts.util.map(data, (item, dataIndex) => {
+          return {
+						type: "circle",
+            position: myChart.convertToPixel("grid", item),
+            shape: {
+              r: symbolSize,
+            },
+            // invisible: true,
+            style: { fill: "rgba(0, 102, 210, 0.4)" },
+            draggable: true,
+            ondrag: echarts.util.curry(onPointDragging, dataIndex),
+            onmousemove: echarts.util.curry(showTooltip, dataIndex),
+            onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+            z: 100,
+          };
+        }),
+      });
+
+      window.addEventListener("resize", () => {
+        myChart.setOption({
+          graphic: echarts.util.map(data, (item, dataIndex) => {
+            return {
+							position: myChart.convertToPixel("grid", item),
+            };
+          }),
+        });
+      });
+
+      function showTooltip(dataIndex) {
+        myChart.dispatchAction({
+          type: "showTip",
+          seriesIndex: 0,
+          dataIndex: dataIndex,
+        });
+      }
+
+      function hideTooltip(dataIndex) {
+        myChart.dispatchAction({
+          type: "hideTip",
+        });
+      }
+
+      function onPointDragging(dataIndex, dx, dy) {
+        data[dataIndex] = myChart.convertFromPixel("grid", this.position);
+        myChart.setOption({
+          series: [
+            {
+              id: "id",
+              data: data,
+            },
+          ],
+        });
+      }
+    </script>
+  </body>
+</html>
