@@ -72,13 +72,23 @@
       myChart.setOption({
         graphic: echarts.util.map(data, (item, dataIndex) => {
           return {
-            type: "circle",
-            position: myChart.convertToPixel("grid", item),
+            // type: "circle",
+            // position: myChart.convertToPixel("grid", item),
+            // shape: {
+            //   r: symbolSize,
+            // },
+            type: "rect",
+            position: myChart.convertToPixel("grid", [
+              item[0] - 60,
+              item[1] + 40,
+            ]),
             shape: {
-              r: symbolSize,
+              width: symbolSize * 2,
+              height: 30,
+              borderRadius: 30,
             },
             // invisible: true,
-            style: { fill: "rgba(0, 102, 210, 0.4)" },
+            style: { fill: "rgba(0, 102, 210, 1)" },
             draggable: true,
             ondrag: echarts.util.curry(onPointDragging, dataIndex),
             onmousemove: echarts.util.curry(showTooltip, dataIndex),
@@ -92,7 +102,10 @@
         myChart.setOption({
           graphic: echarts.util.map(data, (item, dataIndex) => {
             return {
-              position: myChart.convertToPixel("grid", item),
+              position: myChart.convertToPixel("grid", [
+                item[0] - 60,
+                item[1] + 40,
+              ]),
             };
           }),
         });
@@ -113,7 +126,10 @@
       }
 
       function onPointDragging(dataIndex, dx, dy) {
-        data[dataIndex] = myChart.convertFromPixel("grid", this.position);
+        data[dataIndex] = myChart.convertFromPixel("grid", [
+          this.position[0] + 20,
+          this.position[1] + 19,
+        ]);
         myChart.setOption({
           series: [
             {
@@ -126,3 +142,5 @@
     </script>
   </body>
 </html>
+
+[ item[0] - 60, item[1] + 40, ]
